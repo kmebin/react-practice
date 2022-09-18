@@ -28,6 +28,8 @@ a {
 
 .landing-title {
   margin-bottom: 24px;
+  font-size: 32px;
+  font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.03em;
   color: #fff;
@@ -68,5 +70,33 @@ a {
   align-items: center;
   height: 64px;
   font-size: 18px;
+  font-weight: 700;
   color: #1f2d3d;
+}
+
+@media screen and (min-width: 768px) {
+  .landing {
+    align-items: center;
+  }
+
+  .landing-title {
+    margin-bottom: 32px;
+    font-size: 50px;
+    text-align: center;
+  }
+
+  .landing-link {
+    width: 180px;
+    height: 56px;
+    font-size: 18px;
+  }
+
+  .banner {
+    top: 0;
+    bottom: auto;
+  }
+
+  .banner-title a {
+    height: 80px;
+  }
 }
