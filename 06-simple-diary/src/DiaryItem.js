@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 const DiaryItem = ({ onDelete, onEdit, id, author, content, emotion, date }) => {
+  const editedContentInput = useRef();
+
   const [isEdit, setIsEdit] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
 
@@ -15,6 +17,11 @@ const DiaryItem = ({ onDelete, onEdit, id, author, content, emotion, date }) => 
   };
 
   const editHandler = () => {
+    if (editedContent.length < 5) {
+      editedContentInput.current.focus();
+      return;
+    }
+
     onEdit(id, editedContent);
     setIsEdit(false);
   };
@@ -40,7 +47,7 @@ const DiaryItem = ({ onDelete, onEdit, id, author, content, emotion, date }) => 
         </DiaryCommonMode>
       ) : (
         <DiaryEditMode>
-          <textarea value={editedContent} onChange={(e) => setEditedContent(e.target.value)} />
+          <textarea ref={editedContentInput} value={editedContent} onChange={(e) => setEditedContent(e.target.value)} />
           <button type='button' onClick={cancelEditHandler}>
             수정 취소하기
           </button>
