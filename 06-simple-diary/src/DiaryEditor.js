@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 const DiaryEditor = () => {
-  const [input, setInput] = useState({
+  const authorInput = useRef();
+  const contentInput = useRef();
+
+  const [state, setState] = useState({
     author: "",
     content: "",
     emotion: 1,
   });
 
   const inputChangeHandler = (e) => {
-    setInput((preInput) => ({
-      ...preInput,
+    setState((preState) => ({
+      ...preState,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const submitHandler = () => {
-    console.log(input);
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    if (state.author.length < 1) {
+      authorInput.current.focus();
+      return;
+    }
+
+    if (state.content.length < 5) {
+      contentInput.current.focus();
+      return;
+    }
     alert("저장 성공!");
   };
 
@@ -24,11 +37,11 @@ const DiaryEditor = () => {
     <StyledRoot>
       <h2>오늘의 일기</h2>
       <StyledForm>
-        <input type='text' name='author' value={input.author} onChange={inputChangeHandler} />
-        <textarea name='content' value={input.content} onChange={inputChangeHandler} />
+        <input ref={authorInput} type='text' name='author' value={state.author} onChange={inputChangeHandler} />
+        <textarea ref={contentInput} name='content' value={state.content} onChange={inputChangeHandler} />
         <EmotionFilter>
           <label htmlFor='emotion'>오늘의 감정점수 : </label>
-          <select name='emotion' id='emotion' value={input.emotion} onChange={inputChangeHandler}>
+          <select name='emotion' id='emotion' value={state.emotion} onChange={inputChangeHandler}>
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
