@@ -10,16 +10,22 @@ const App = () => {
     setDiaryData([newDiary, ...diaryData]);
   };
 
-  const deleteDiaryHandler = (diaryId) => {
+  const deleteDiaryHandler = (targetId) => {
     setDiaryData((preDiary) => {
-      return preDiary.filter((diary) => diary.id !== diaryId);
+      return preDiary.filter((diary) => diary.id !== targetId);
+    });
+  };
+
+  const editDiaryHandler = (targetId, content) => {
+    setDiaryData((preDiary) => {
+      return preDiary.map((diary) => (diary.id === targetId ? { ...diary, content } : diary));
     });
   };
 
   return (
     <>
       <DiaryEditor onAdd={addDiaryHandler} />
-      <DiaryList diaryList={diaryData} onDelete={deleteDiaryHandler} />
+      <DiaryList diaryList={diaryData} onDelete={deleteDiaryHandler} onEdit={editDiaryHandler} />
     </>
   );
 };

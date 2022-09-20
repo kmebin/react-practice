@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-const DiaryItem = ({ id, author, content, emotion, date, onDelete }) => {
+const DiaryItem = ({ onDelete, onEdit, id, author, content, emotion, date }) => {
+  const [isEdit, setIsEdit] = useState(false);
+  const [editedContent, setEditedContent] = useState(content);
+
+  const deleteHandler = () => {
+    window.confirm(`${id}번 일기를 정말 삭제하시겠습니까?`) && onDelete(id);
+  };
+
+  const cancelEditHandler = () => {
+    setIsEdit(false);
+    setEditedContent(content);
+  };
+
+  const editHandler = () => {
+    onEdit(id, editedContent);
+    setIsEdit(false);
+  };
+
   return (
     <StyledRoot>
       <DiaryInfo>
@@ -10,17 +27,28 @@ const DiaryItem = ({ id, author, content, emotion, date, onDelete }) => {
         </strong>
         <span>{new Date(date).toLocaleString()}</span>
       </DiaryInfo>
-      <DiaryContent>
-        <strong>{content}</strong>
-      </DiaryContent>
-      <button
-        type='button'
-        onClick={() => {
-          window.confirm(`${id}번 일기를 정말 삭제하시겠습니까?`) && onDelete(id);
-        }}
-      >
-        삭제하기
-      </button>
+
+      {!isEdit ? (
+        <DiaryCommonMode>
+          <strong>{content}</strong>
+          <button type='button' onClick={deleteHandler}>
+            삭제하기
+          </button>
+          <button type='button' onClick={() => setIsEdit(true)}>
+            수정하기
+          </button>
+        </DiaryCommonMode>
+      ) : (
+        <DiaryEditMode>
+          <textarea value={editedContent} onChange={(e) => setEditedContent(e.target.value)} />
+          <button type='button' onClick={cancelEditHandler}>
+            수정 취소하기
+          </button>
+          <button type='button' onClick={editHandler}>
+            저장하기
+          </button>
+        </DiaryEditMode>
+      )}
     </StyledRoot>
   );
 };
@@ -46,8 +74,24 @@ const DiaryInfo = styled.div`
   }
 `;
 
-const DiaryContent = styled.div`
-  height: 60px;
+const DiaryCommonMode = styled.div`
+  & strong {
+    display: block;
+    height: 60px;
+  }
+`;
+
+const DiaryEditMode = styled.div`
+  textarea {
+    display: block;
+    width: 500px;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  & textarea {
+    height: 150px;
+  }
 `;
 
 export default DiaryItem;
