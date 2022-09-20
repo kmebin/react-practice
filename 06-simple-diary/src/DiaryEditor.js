@@ -61,6 +61,10 @@ const StyledRoot = styled.section`
   border: 1px solid gray;
   padding: 20px;
   text-align: center;
+
+  & h2 {
+    margin-bottom: 20px;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -82,7 +86,6 @@ const StyledForm = styled.form`
   & button {
     width: 500px;
     padding: 10px;
-    cursor: pointer;
   }
 `;
 
