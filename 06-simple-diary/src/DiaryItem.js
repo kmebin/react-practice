@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const DiaryItem = ({ id, author, content, emotion, date }) => {
+const DiaryItem = ({ id, author, content, emotion, date, onDelete }) => {
   return (
     <StyledRoot>
       <DiaryInfo>
@@ -13,6 +13,14 @@ const DiaryItem = ({ id, author, content, emotion, date }) => {
       <DiaryContent>
         <strong>{content}</strong>
       </DiaryContent>
+      <button
+        type='button'
+        onClick={() => {
+          window.confirm(`${id}번 일기를 정말 삭제하시겠습니까?`) && onDelete(id);
+        }}
+      >
+        삭제하기
+      </button>
     </StyledRoot>
   );
 };

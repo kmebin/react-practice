@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
-const DiaryEditor = ({ onAddDiary }) => {
+const DiaryEditor = ({ onAdd }) => {
   const authorInput = useRef();
   const contentInput = useRef();
   const diaryId = useRef(1);
@@ -32,7 +32,7 @@ const DiaryEditor = ({ onAddDiary }) => {
       return;
     }
 
-    onAddDiary({ id: diaryId.current, ...state, date: new Date() });
+    onAdd({ id: diaryId.current, ...state, date: new Date() });
     alert("저장 성공");
 
     setState({
