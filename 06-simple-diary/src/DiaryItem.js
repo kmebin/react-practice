@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const DiaryItem = ({ id, author, content, emotion, createdAt }) => {
+const DiaryItem = ({ id, author, content, emotion, date }) => {
   return (
     <StyledRoot>
       <DiaryInfo>
         <strong>
           작성자: {author} | 감정점수: {emotion}
         </strong>
-        <span>{new Date(createdAt).toLocaleString()}</span>
+        <span>{new Date(date).toLocaleString()}</span>
       </DiaryInfo>
       <DiaryContent>
         <strong>{content}</strong>

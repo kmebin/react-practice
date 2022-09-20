@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ onAddDiary }) => {
   const authorInput = useRef();
   const contentInput = useRef();
+  const diaryId = useRef(1);
 
   const [state, setState] = useState({
     author: "",
@@ -30,7 +31,16 @@ const DiaryEditor = () => {
       contentInput.current.focus();
       return;
     }
-    alert("저장 성공!");
+
+    onAddDiary({ id: diaryId.current, ...state, date: new Date() });
+    alert("저장 성공");
+
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
+    diaryId.current += 1;
   };
 
   return (
