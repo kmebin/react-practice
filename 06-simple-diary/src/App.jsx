@@ -4,6 +4,7 @@ import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 import { getAllDiaries } from "./libs/api";
 import LifeCycle from "./LifeCycle";
+import OptimizeTest from "./OptimizeTest";
 
 const App = () => {
   const [diaryData, setDiaryData] = useState([]);
@@ -46,6 +47,7 @@ const App = () => {
 
   return (
     <>
+      <OptimizeTest />
       <LifeCycle />
       <DiaryEditor onAdd={addDiaryHandler} />
       <section>
