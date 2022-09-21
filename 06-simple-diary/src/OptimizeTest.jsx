@@ -1,30 +1,47 @@
 import React, { useState } from "react";
 
-const CountView = React.memo(({ count }) => {
+const CounterA = React.memo(({ count }) => {
   return <div>{count}</div>;
 });
 
-const TextView = React.memo(({ text }) => {
-  return <div>{text}</div>;
-});
+const CounterB = ({ obj }) => {
+  return <div>{obj.count}</div>;
+};
+
+const areEqual = (prevProps, nextProps) => {
+  return prevProps.obj.count === nextProps.obj.count;
+};
+
+const MemoizedCounterB = React.memo(CounterB, areEqual);
 
 const OptimizeTest = () => {
   const [count, setCount] = useState(1);
-  const [text, setText] = useState("");
+  const [obj, setObj] = useState({
+    count: 1,
+  });
 
   return (
     <section style={{ padding: 50 }}>
       <div>
-        <h2>count</h2>
-        <CountView count={count} />
-        <button type='button' onClick={() => setCount(count + 1)}>
-          +
+        <h2>Counter A</h2>
+        <CounterA count={count} />
+        <button type='button' onClick={() => setCount(count)}>
+          A button
         </button>
       </div>
       <div>
-        <h2>text</h2>
-        <TextView text={text} />
-        <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
+        <h2>Counter B</h2>
+        <MemoizedCounterB obj={obj} />
+        <button
+          type='button'
+          onClick={() =>
+            setObj({
+              count: obj.count,
+            })
+          }
+        >
+          B button
+        </button>
       </div>
     </section>
   );
