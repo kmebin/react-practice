@@ -4,7 +4,7 @@ import styled from "styled-components";
 const DiaryEditor = ({ onAdd }) => {
   const authorInput = useRef();
   const contentInput = useRef();
-  const diaryId = useRef(1);
+  const diaryId = useRef(21);
 
   const [state, setState] = useState({
     author: "",

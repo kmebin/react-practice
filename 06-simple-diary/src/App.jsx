@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
+import { getAllDiaries } from "./libs/api";
 import LifeCycle from "./LifeCycle";
 
 const App = () => {
   const [diaryData, setDiaryData] = useState([]);
+
+  useEffect(() => {
+    getDiaryData();
+  }, []);
+
+  const getDiaryData = async () => {
+    const diaries = await getAllDiaries();
+
+    setDiaryData(diaries);
+  };
 
   const addDiaryHandler = (newDiary) => {
     setDiaryData([newDiary, ...diaryData]);
