@@ -67,6 +67,8 @@ const DiaryEditor = ({ onAdd }) => {
   );
 };
 
+export default React.memo(DiaryEditor);
+
 const StyledRoot = styled.section`
   border: 1px solid gray;
   padding: 20px;
@@ -108,5 +110,3 @@ const EmotionFilter = styled.div`
     padding: 10px;
   }
 `;
-
-export default DiaryEditor;

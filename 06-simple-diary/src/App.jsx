@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
@@ -19,20 +19,16 @@ const App = () => {
     setDiaryData(diaries);
   };
 
-  const addDiaryHandler = (newDiary) => {
-    setDiaryData([newDiary, ...diaryData]);
-  };
+  const addDiaryHandler = useCallback((newDiary) => {
+    setDiaryData((prev) => [newDiary, ...prev]);
+  }, []);
 
   const deleteDiaryHandler = (targetId) => {
-    setDiaryData((preDiary) => {
-      return preDiary.filter((diary) => diary.id !== targetId);
-    });
+    setDiaryData((prev) => prev.filter((diary) => diary.id !== targetId));
   };
 
   const editDiaryHandler = (targetId, content) => {
-    setDiaryData((preDiary) => {
-      return preDiary.map((diary) => (diary.id === targetId ? { ...diary, content } : diary));
-    });
+    setDiaryData((prev) => prev.map((diary) => (diary.id === targetId ? { ...diary, content } : diary)));
   };
 
   const diaryAnalysis = useMemo(() => {
