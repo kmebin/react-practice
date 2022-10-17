@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useReducer } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
@@ -6,8 +6,23 @@ import { getAllDiaries } from "./libs/api";
 import LifeCycle from "./LifeCycle";
 import OptimizeTest from "./OptimizeTest";
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "init":
+      return action.diaries;
+    case "create":
+      return [action.newDiary, ...state];
+    case "delete":
+      return state.filter((item) => item.id !== action.targetId);
+    case "update":
+      return state.map((item) => (item.id === action.targetId ? { ...item, content: action.content } : item));
+    default:
+      return state;
+  }
+};
+
 const App = () => {
-  const [diaryData, setDiaryData] = useState([]);
+  const [diaryData, dispatch] = useReducer(reducer, []);
 
   useEffect(() => {
     getDiaryData();
@@ -16,19 +31,19 @@ const App = () => {
   const getDiaryData = async () => {
     const diaries = await getAllDiaries();
 
-    setDiaryData(diaries);
+    dispatch({ type: "init", diaries });
   };
 
   const addDiaryHandler = useCallback((newDiary) => {
-    setDiaryData((prev) => [newDiary, ...prev]);
+    dispatch({ type: "create", newDiary });
   }, []);
 
   const deleteDiaryHandler = useCallback((targetId) => {
-    setDiaryData((prev) => prev.filter((diary) => diary.id !== targetId));
+    dispatch({ type: "delete", targetId });
   }, []);
 
   const editDiaryHandler = useCallback((targetId, content) => {
-    setDiaryData((prev) => prev.map((diary) => (diary.id === targetId ? { ...diary, content } : diary)));
+    dispatch({ type: "update", targetId, content });
   }, []);
 
   const diaryAnalysis = useMemo(() => {
