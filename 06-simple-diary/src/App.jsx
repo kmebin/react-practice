@@ -23,13 +23,13 @@ const App = () => {
     setDiaryData((prev) => [newDiary, ...prev]);
   }, []);
 
-  const deleteDiaryHandler = (targetId) => {
+  const deleteDiaryHandler = useCallback((targetId) => {
     setDiaryData((prev) => prev.filter((diary) => diary.id !== targetId));
-  };
+  }, []);
 
-  const editDiaryHandler = (targetId, content) => {
+  const editDiaryHandler = useCallback((targetId, content) => {
     setDiaryData((prev) => prev.map((diary) => (diary.id === targetId ? { ...diary, content } : diary)));
-  };
+  }, []);
 
   const diaryAnalysis = useMemo(() => {
     const goodEmotionCount = diaryData.filter((diary) => diary.emotion >= 3).length;

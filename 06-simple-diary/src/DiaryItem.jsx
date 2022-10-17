@@ -60,6 +60,8 @@ const DiaryItem = ({ onDelete, onEdit, id, author, content, emotion, date }) => 
   );
 };
 
+export default React.memo(DiaryItem);
+
 const StyledRoot = styled.li`
   margin-bottom: 10px;
   padding: 20px;
@@ -100,5 +102,3 @@ const DiaryEditMode = styled.div`
     height: 150px;
   }
 `;
-
-export default DiaryItem;
