@@ -1,7 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import styled from "styled-components";
+import { DiaryDispatchContext } from "./App";
 
-const DiaryItem = ({ onDelete, onEdit, id, author, content, emotion, date }) => {
+const DiaryItem = ({ id, author, content, emotion, date }) => {
+  const { onDelete, onEdit } = useContext(DiaryDispatchContext);
+
   const editedContentInput = useRef();
 
   const [isEdit, setIsEdit] = useState(false);
